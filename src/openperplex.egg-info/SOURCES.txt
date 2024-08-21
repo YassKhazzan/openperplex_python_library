@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+setup.py
+src/openperplex/__init__.py
+src/openperplex/openperplex.py
+src/openperplex.egg-info/PKG-INFO
+src/openperplex.egg-info/SOURCES.txt
+src/openperplex.egg-info/dependency_links.txt
+src/openperplex.egg-info/requires.txt
+src/openperplex.egg-info/top_level.txt
