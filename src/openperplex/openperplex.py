@@ -3,13 +3,11 @@ import json
 from typing import Optional, Dict, Any, Generator, List
 from urllib.parse import urljoin
 
-
 class OpenperplexError(Exception):
     def __init__(self, status_code: int, detail: str):
         self.status_code = status_code
         self.detail = detail
         super().__init__(f"OPENPERPLEX ERROR : {status_code} - {detail}")
-
 
 class Openperplex:
     def __init__(self, api_key: str, base_url: str = "https://5e70fd93-e9b8-4b9c-b7d9-eea4580f330c.app.bhs.ai.cloud.ovh.net"):
@@ -24,7 +22,6 @@ class Openperplex:
         url = urljoin(self.base_url, endpoint)
         headers = {
             "X-API-Key": self.api_key,
-
         }
 
         response = self.client.get(url, params=params, headers=headers)
@@ -37,23 +34,15 @@ class Openperplex:
         return response
 
     def search_stream(self, query: str, date_context: Optional[str] = None, location: str = 'us',
-                      pro_mode: bool = False, response_language: str = 'auto') -> Generator[Dict[str, Any], None, None]:
-        """
-        Perform a search and get the response in a stream including the search results (citations,sources,relevant questions)
-        :param query: The search query
-        :param date_context: The date context to use for the search
-        :param location: The location to search from default is 'us'
-        :param pro_mode: Whether to use pro mode or not default is False
-        :param response_language: The language of the response default is 'auto'
-        :return: A generator that yields the Response in a stream including the search results (citations,sources,relevant questions)
-        """
+                      pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Generator[Dict[str, Any], None, None]:
         endpoint = "/search_stream"
         params = {
             "query": query,
             "date_context": date_context,
             "location": location,
             "pro_mode": pro_mode,
-            "response_language": response_language
+            "response_language": response_language,
+            "answer_type": answer_type
         }
 
         with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={
@@ -64,24 +53,16 @@ class Openperplex:
             yield from self._stream_sse_response(response)
 
     def search_simple_stream(self, query: str, location: str = 'us', date_context: Optional[str] = None,
-                             pro_mode: bool = False, response_language: str = 'auto') -> Generator[
-        Dict[str, Any], None, None]:
-        """
-         Perform a simple search and get the response in a stream
-        :param query: The search query
-        :param location: The location to search from default is 'us'
-        :param date_context: The date context to use for the search
-        :param pro_mode: Whether to use pro mode or not default is False
-        :param response_language: The language of the response default is 'auto'
-        :return: A generator that yields the Response in a stream
-         """
+                             pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Generator[Dict[str, Any], None, None]:
         endpoint = "/search_simple_stream"
-        params = {"query": query,
-                  "location": location,
-                  'date_context': date_context,
-                  'pro_mode': pro_mode,
-                  'response_language': response_language
-                  }
+        params = {
+            "query": query,
+            "location": location,
+            'date_context': date_context,
+            'pro_mode': pro_mode,
+            'response_language': response_language,
+            'answer_type': answer_type
+        }
 
         with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={
             "X-API-Key": self.api_key,
@@ -91,99 +72,65 @@ class Openperplex:
             yield from self._stream_sse_response(response)
 
     def search(self, query: str, date_context: Optional[str] = None, location: str = 'us', pro_mode: bool = False,
-               response_language: str = 'auto') -> \
-            Dict[str, Any]:
-        """
-        Perform a search and get the response including the search results (citations,sources,relevant questions)
-        :param query: The search query
-        :param date_context: The date context to use for the search
-        :param location: The location to search from default is 'us'
-        :param pro_mode: Whether to use pro mode or not default is False
-        :param response_language: The language of the response default is 'auto'
-        :return: Json response Including the search results (citations,sources,relevant questions)
-
-        """
+               response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
         endpoint = "/search"
         params = {
             "query": query,
             "date_context": date_context,
             "location": location,
             "pro_mode": pro_mode,
-            "response_language": response_language
+            "response_language": response_language,
+            "answer_type": answer_type
         }
 
         response = self._make_request(endpoint, params)
         return response.json()
 
     def search_simple(self, query: str, location: str = 'us', date_context: Optional[str] = None,
-                      pro_mode: bool = False, response_language: str = 'auto') -> str:
-        """
-         Perform a simple search and get the response
-        :param query: The search query
-        :param location: The location to search from default is 'us'
-        :param date_context: The date context to use for the search
-        :param pro_mode: Whether to use pro mode or not default is False
-        :param response_language: The language of the response default is 'auto'
-         """
+                      pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
         endpoint = "/search_simple"
-        params = {"query": query, "location": location, 'date_context': date_context, 'pro_mode': pro_mode,
-                  'response_language': response_language}
+        params = {
+            "query": query,
+            "location": location,
+            'date_context': date_context,
+            'pro_mode': pro_mode,
+            'response_language': response_language,
+            'answer_type': answer_type
+        }
 
         response = self._make_request(endpoint, params)
-        return response.text
+        return response.json()
 
-    def get_website_text(self, url: str) -> str:
-        """
-        Get the text content of a website
-        :param url: The URL of the website
-        :return: The text content of the website
-        """
+    def get_website_text(self, url: str) -> Dict[str, Any]:
         endpoint = "/get_website_text"
         params = {"url": url}
 
         response = self._make_request(endpoint, params)
-        return response.text
+        return response.json()
 
-    def get_website_screenshot(self, url: str) -> str:
-        """
-         Get a screenshot of a website
-        :param url: The URL of the website
-        :return: The screenshot image as a URL
-         """
+    def get_website_screenshot(self, url: str) -> Dict[str, Any]:
         endpoint = "/get_website_screenshot"
         params = {"url": url}
 
         response = self._make_request(endpoint, params)
-        return response.text
+        return response.json()
 
-    def get_website_markdown(self, url: str) -> str:
-        """
-        Get the markdown content of a website
-        :param url: The URL of the website
-        :return: The markdown content of the website
-        """
+    def get_website_markdown(self, url: str) -> Dict[str, Any]:
         endpoint = "/get_website_markdown"
         params = {"url": url}
 
         response = self._make_request(endpoint, params)
-        return response.text
+        return response.json()
 
-    def query_from_url(self, url: str, query: str, response_language: str = 'auto') -> str:
-        """
-        Query a website URL, ask a question and get a response in the specified language
-        :param url: The URL of the website
-        :param query: The question to ask
-        :param response_language: The language of the response
-        :return: The response
-        """
+    def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
         endpoint = "/query_from_url"
-        params = {"url": url, "query": query, "response_language": response_language}
+        params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type}
 
         response = self._make_request(endpoint, params)
-        return response.text
+        return response.json()
 
     def _stream_sse_response(self, response: httpx.Response) -> Generator[Dict[str, Any], None, None]:
-        for line in response.iter_lines() if response.iter_lines else []:
+        for line in response.iter_lines():
             if line:
                 try:
                     if line.startswith("data:"):
@@ -200,7 +147,6 @@ class Openperplex:
                 except json.JSONDecodeError:
                     print(f"Failed to parse JSON from line: {line}")
                 except OpenperplexError as e:
-                    # Re-raise the OpenperplexError to be caught by the calling function
                     raise e
                 except Exception as e:
                     print(f"Error processing line: {e}")
