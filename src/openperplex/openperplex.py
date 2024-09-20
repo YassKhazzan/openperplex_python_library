@@ -1,7 +1,10 @@
+from tabnanny import verbose
+
 import httpx
 import json
 from typing import Optional, Dict, Any, Generator, List
 from urllib.parse import urljoin
+
 
 class OpenperplexError(Exception):
     def __init__(self, status_code: int, detail: str):
@@ -9,8 +12,10 @@ class OpenperplexError(Exception):
         self.detail = detail
         super().__init__(f"OPENPERPLEX ERROR : {status_code} - {detail}")
 
+
 class Openperplex:
-    def __init__(self, api_key: str, base_url: str = "https://5e70fd93-e9b8-4b9c-b7d9-eea4580f330c.app.bhs.ai.cloud.ovh.net"):
+    def __init__(self, api_key: str,
+                 base_url: str = "https://5e70fd93-e9b8-4b9c-b7d9-eea4580f330c.app.bhs.ai.cloud.ovh.net"):
         self.base_url = base_url
         self.api_key = api_key
         self.client = httpx.Client(timeout=40.0)
@@ -33,8 +38,15 @@ class Openperplex:
             self._handle_error_response(response)
         return response
 
-    def search_stream(self, query: str, date_context: Optional[str] = None, location: str = 'us',
-                      pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Generator[Dict[str, Any], None, None]:
+    def search_stream(self, query: str,
+                      date_context: Optional[str] = None,
+                      location: str = 'us',
+                      pro_mode: bool = False,
+                      response_language: str = 'auto',
+                      answer_type: str = 'text',
+                      verbose_mode: bool = False,
+                      search_type: str = 'general'
+                      ) -> Generator[Dict[str, Any], None, None]:
         endpoint = "/search_stream"
         params = {
             "query": query,
@@ -42,7 +54,9 @@ class Openperplex:
             "location": location,
             "pro_mode": pro_mode,
             "response_language": response_language,
-            "answer_type": answer_type
+            "answer_type": answer_type,
+            "verbose_mode": verbose_mode,
+            "search_type": search_type
         }
 
         with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={
@@ -52,8 +66,15 @@ class Openperplex:
                 self._handle_error_response(response)
             yield from self._stream_sse_response(response)
 
-    def search_simple_stream(self, query: str, location: str = 'us', date_context: Optional[str] = None,
-                             pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Generator[Dict[str, Any], None, None]:
+    def search_simple_stream(self, query: str,
+                             location: str = 'us',
+                             date_context: Optional[str] = None,
+                             pro_mode: bool = False,
+                             response_language: str = 'auto',
+                             answer_type: str = 'text',
+                             verbose_mode: bool = False,
+                             search_type: str = 'general'
+                             ) -> Generator[Dict[str, Any], None, None]:
         endpoint = "/search_simple_stream"
         params = {
             "query": query,
@@ -61,7 +82,9 @@ class Openperplex:
             'date_context': date_context,
             'pro_mode': pro_mode,
             'response_language': response_language,
-            'answer_type': answer_type
+            'answer_type': answer_type,
+            'verbose_mode': verbose_mode,
+            'search_type': search_type
         }
 
         with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={
@@ -71,8 +94,15 @@ class Openperplex:
                 self._handle_error_response(response)
             yield from self._stream_sse_response(response)
 
-    def search(self, query: str, date_context: Optional[str] = None, location: str = 'us', pro_mode: bool = False,
-               response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
+    def search(self, query: str,
+               date_context: Optional[str] = None,
+               location: str = 'us',
+               pro_mode: bool = False,
+               response_language: str = 'auto',
+               answer_type: str = 'text',
+               verbose_mode: bool = False,
+               search_type: str = 'general'
+               ) -> Dict[str, Any]:
         endpoint = "/search"
         params = {
             "query": query,
@@ -80,14 +110,24 @@ class Openperplex:
             "location": location,
             "pro_mode": pro_mode,
             "response_language": response_language,
-            "answer_type": answer_type
+            "answer_type": answer_type,
+            "verbose_mode": verbose_mode,
+            "search_type": search_type
         }
 
         response = self._make_request(endpoint, params)
         return response.json()
 
-    def search_simple(self, query: str, location: str = 'us', date_context: Optional[str] = None,
-                      pro_mode: bool = False, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
+    def search_simple(self, query: str,
+                      location: str = 'us',
+                      date_context: Optional[str] = None,
+                      pro_mode: bool = False,
+                      response_language: str = 'auto',
+                      answer_type: str = 'text',
+                      verbose_mode: bool = False,
+                      search_type: str = 'general'
+                      ) -> Dict[
+        str, Any]:
         endpoint = "/search_simple"
         params = {
             "query": query,
@@ -95,7 +135,9 @@ class Openperplex:
             'date_context': date_context,
             'pro_mode': pro_mode,
             'response_language': response_language,
-            'answer_type': answer_type
+            'answer_type': answer_type,
+            'verbose_mode': verbose_mode,
+            'search_type': search_type
         }
 
         response = self._make_request(endpoint, params)
@@ -122,7 +164,8 @@ class Openperplex:
         response = self._make_request(endpoint, params)
         return response.json()
 
-    def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
+    def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text') -> Dict[
+        str, Any]:
         endpoint = "/query_from_url"
         params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type}
 

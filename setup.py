@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="openperplex",
-    version="0.1.4",
+    version="0.1.5",
     author="Yassine khazzan",
     author_email="yassine.khazzan@gmail.com",
     description="A Python client for the Openperplex API",
