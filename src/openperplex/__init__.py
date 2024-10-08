@@ -1,2 +1,1 @@
-# Contents of src/openperplex/__init__.py
-from .openperplex import Openperplex, OpenperplexError
+from .openperplex import OpenperplexAsync, OpenperplexError, OpenperplexSync

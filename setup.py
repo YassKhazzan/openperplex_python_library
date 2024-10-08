@@ -5,13 +5,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="openperplex",
-    version="0.1.5",
+    version="0.2.0",
     author="Yassine khazzan",
     author_email="yassine.khazzan@gmail.com",
     description="A Python client for the Openperplex API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/YassKhazzan/openperplex_python_client",
+    url="https://github.com/YassKhazzan/openperplex_python_library",
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     classifiers=[

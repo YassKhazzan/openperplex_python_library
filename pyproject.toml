@@ -4,7 +4,7 @@
 
    [project]
    name = "openperplex"
-   version = "0.1.5"
+   version = "0.2.0"
    description = "A Python client for the Openperplex API"
    readme = "README.md"
    authors = [{name = "Yassine khazzan", email = "yassine.khazzan@gmail.com"}]
@@ -26,7 +26,7 @@
    requires-python = ">=3.8"
 
    [project.urls]
-   Homepage = "https://github.com/YassKhazzan/openperplex_python_client"
+   Homepage = "https://github.com/YassKhazzan/openperplex_python_library"
 
    [tool.setuptools.packages.find]
    where = ["src"]
