@@ -341,4 +341,4 @@ Remember to handle potential network errors and other exceptions as needed in yo
 
 The Openperplex Python library provides a powerful interface to access advanced search and web analysis capabilities. By leveraging its various methods and parameters, you can create sophisticated applications that can understand and process web content in multiple languages and contexts.
 
-For any issues, feature requests, or further questions, please refer to the official Openperplex documentation or contact their support team.
+For any issues, feature requests, or further questions, please open an issue.
