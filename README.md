@@ -262,13 +262,13 @@ async for chunk in client_async.custom_search_stream(
 
 ### Common Parameters
 - `query`: The search query or question.
-- `date_context`: Optional date for context (format: "YYYY-MM-DD" or "YYYY-MM-DD HH:MM AM/PM"). If empty, the current date of the API server is used.
+- `date_context`: String Optional date for context (format: "today is 8 of october and time is 4 PM" or "YYYY-MM-DD HH:MM AM/PM"). If empty, the current date of the API server is used.
 - `location`: Country code for search context. Default is "us".
 - `pro_mode`: Boolean to enable or disable pro mode. Default is False.
 - `response_language`: Language code for the response. Default is "auto" (auto-detect).
 - `answer_type`: Type of answer format. Options are "text" (default), "markdown", or "html".
 - `verbose_mode`: Boolean to enable or disable verbose mode. Default is False.
-- `search_type`: Type of search to perform. Default is "general".
+- `search_type`: Type of search to perform (general or news). Default is "general".
 - `return_citations`: Boolean to indicate whether to return citations. Default is False.
 - `return_sources`: Boolean to indicate whether to return sources. Default is False.
 - `return_images`: Boolean to indicate whether to return images. Default is False.
@@ -278,7 +278,7 @@ async for chunk in client_async.custom_search_stream(
 - `user_prompt`: The user prompt for custom search.
 - `temperature`: Float value to control the randomness of the output. Default is 0.2.
 - `top_p`: Float value to control the diversity of the output. Default is 0.9.
-
+- `search_type`: Type of search to perform (general or news). Default is "general".
 ## Supported Locations
 
 The `location` parameter accepts the following country codes:
