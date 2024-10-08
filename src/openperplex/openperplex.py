@@ -3,6 +3,7 @@ import json
 from typing import Optional, Dict, Any, Generator, AsyncGenerator, List
 from urllib.parse import urljoin
 
+
 class OpenperplexError(Exception):
     def __init__(self, status_code: int, detail: str):
         self.status_code = status_code
