@@ -30,22 +30,27 @@ The library provides both synchronous and asynchronous versions of its methods. 
 
 Perform a search query, either as a single response or as a stream.
 
+- **Query Precision**: Provide clear and concise queries to get accurate results.
+
+
+
 #### Synchronous:
 
 ```python
 # Non-streaming search
 result = client_sync.search(
     query="What are the latest developments in AI?",
-    date_context="2024-08-25",
-    location="us",
-    pro_mode=False,
-    response_language="en",
-    answer_type="text",
-    verbose_mode=False,
-    search_type="general",
-    return_citations=False,
-    return_sources=False,
-    return_images=False
+    date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
+    location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+    pro_mode=False, # set to True to enable pro mode
+    response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
+    answer_type="text", # can be 'text', 'markdown', or 'html'
+    verbose_mode=False, # set to True to enable verbose mode
+    search_type="general", # can be 'news' or 'general'
+    return_citations=False, # set to True to return citations
+    return_sources=False, # set to True to return sources
+    return_images=False, #set to True to return images (depends on the query, some queries may not return images)
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 )
 
 print(result)
@@ -53,16 +58,17 @@ print(result)
 # Streaming search
 for chunk in client_sync.search_stream(
     query="Explain quantum computing",
-    date_context="2024-08-25",
-    location="us",
-    pro_mode=False,
-    response_language="en",
-    answer_type="text",
-    verbose_mode=False,
-    search_type="general",
-    return_citations=False,
-    return_sources=False,
-    return_images=False
+    date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
+    location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+    pro_mode=False,  # set to True to enable pro mode
+    response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
+    answer_type="text", # can be 'text', 'markdown', or 'html'
+    verbose_mode=False, # set to True to enable verbose mode
+    search_type="general", # can be 'news' or 'general'
+    return_citations=False, # set to True to return citations
+    return_sources=False, # set to True to return sources
+    return_images=False, #set to True to return images (depends on the query, some queries may not return images)
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 ):
     print(chunk)
 ```
@@ -72,36 +78,38 @@ for chunk in client_sync.search_stream(
 ```python
 import asyncio
 
-async def search_async():
-    # Non-streaming search
+# Non-streaming search
+async def search_async():    
     result = await client_async.search(
         query="What are the latest developments in AI?",
-        date_context="2024-08-25",
-        location="us",
-        pro_mode=False,
-        response_language="en",
-        answer_type="text",
-        verbose_mode=False,
-        search_type="general",
-        return_citations=False,
-        return_sources=False,
-        return_images=False
+        date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
+        location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+        pro_mode=False, # set to True to enable pro mode
+        response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
+        answer_type="text", # can be 'text', 'markdown', or 'html'
+        verbose_mode=False, # set to True to enable verbose mode
+        search_type="general", # can be 'news' or 'general'
+        return_citations=False, # set to True to return citations
+        return_sources=False, # set to True to return sources
+        return_images=False, #set to True to return images (depends on the query, some queries may not return images)
+        recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
     )
     print(result)
 
-    # Streaming search
-    async for chunk in client_async.search_stream(
+# Streaming search
+async for chunk in client_async.search_stream(
         query="Explain quantum computing",
-        date_context="2024-08-25",
-        location="us",
-        pro_mode=False,
-        response_language="en",
-        answer_type="text",
-        verbose_mode=False,
-        search_type="general",
-        return_citations=False,
-        return_sources=False,
-        return_images=False
+        date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
+        location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+        pro_mode=False, # set to True to enable pro mode
+        response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
+        answer_type="text", # can be 'text', 'markdown', or 'html'
+        verbose_mode=False, # set to True to enable verbose mode
+        search_type="general", # can be 'news' or 'general'
+        return_citations=False, # set to True to return citations
+        return_sources=False, # set to True to return sources
+        return_images=False, #set to True to return images
+        recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
     ):
         print(chunk)
 
@@ -172,8 +180,8 @@ Perform a query based on the content of a specific URL.
 response = client_sync.query_from_url(
     url="https://www.example.com/article",
     query="What is the main topic of this article?",
-    response_language="en",
-    answer_type="text"
+    response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
+    answer_type="text" # can be 'text', 'markdown', or 'html'
 )
 print(response)
 ```
@@ -184,7 +192,7 @@ print(response)
 response = await client_async.query_from_url(
     url="https://www.example.com/article",
     query="What is the main topic of this article?",
-    response_language="en",
+    response_language="en", 
     answer_type="text"
 )
 print(response)
@@ -201,13 +209,14 @@ Perform a custom search query with a system prompt and user prompt.
 result = client_sync.custom_search(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
-    location="us",
-    pro_mode=False,
-    search_type="general",
-    return_images=False,
-    return_sources=False,
-    temperature=0.2,
-    top_p=0.9
+    location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+    pro_mode=False, # set to True to enable pro mode
+    search_type="general", # can be 'news' or 'general'
+    return_images=False, # set to True to return images
+    return_sources=False, # set to True to return sources
+    temperature=0.2, # float value to control the randomness of the output
+    top_p=0.9, # float value to control the diversity of the output
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 )
 print(result)
 
@@ -221,7 +230,8 @@ for chunk in client_sync.custom_search_stream(
     return_images=False,
     return_sources=False,
     temperature=0.2,
-    top_p=0.9
+    top_p=0.9,
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 ):
     print(chunk)
 ```
@@ -239,7 +249,8 @@ result = await client_async.custom_search(
     return_images=False,
     return_sources=False,
     temperature=0.2,
-    top_p=0.9
+    top_p=0.9,
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 )
 print(result)
 
@@ -247,20 +258,21 @@ print(result)
 async for chunk in client_async.custom_search_stream(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
-    location="us",
-    pro_mode=False,
-    search_type="general",
-    return_images=False,
-    return_sources=False,
-    temperature=0.2,
-    top_p=0.9
+    location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+    pro_mode=False, # set to True to enable pro mode
+    search_type="general", # can be 'news' or 'general'
+    return_images=False, # set to True to return images
+    return_sources=False, # set to True to return sources
+    temperature=0.2, # float value to control the randomness of the output
+    top_p=0.9, # float value to control the diversity of the output
+    recency_filter="anytime" # can be 'hour', 'day', 'week', 'month', 'year', 'anytime'
 ):
     print(chunk)
 ```
 
 ## Parameters
 
-### Common Parameters
+### Common Parameters for Search Methods
 - `query`: The search query or question.
 - `date_context`: String Optional date for context (format: "today is 8 of october and time is 4 PM" or "YYYY-MM-DD HH:MM AM/PM"). If empty, the current date of the API server is used.
 - `location`: Country code for search context. Default is "us".
@@ -272,6 +284,7 @@ async for chunk in client_async.custom_search_stream(
 - `return_citations`: Boolean to indicate whether to return citations. Default is False.
 - `return_sources`: Boolean to indicate whether to return sources. Default is False.
 - `return_images`: Boolean to indicate whether to return images. Default is False.
+- `recency_filter`: Filter results by recency. Options are "hour", "day", "week", "month", "year", or "anytime". Default is "anytime".
 
 ### Custom Search Parameters
 - `system_prompt`: The system prompt for custom search.
@@ -279,6 +292,9 @@ async for chunk in client_async.custom_search_stream(
 - `temperature`: Float value to control the randomness of the output. Default is 0.2.
 - `top_p`: Float value to control the diversity of the output. Default is 0.9.
 - `search_type`: Type of search to perform (general or news). Default is "general".
+- `return_images`: Boolean to indicate whether to return images. Default is False.
+- `return_sources`: Boolean to indicate whether to return sources. Default is False.
+- `recency_filter`: Filter results by recency. Options are "hour", "day", "week", "month", "year", or "anytime". Default is "anytime".
 ## Supported Locations
 
 The `location` parameter accepts the following country codes:
@@ -305,6 +321,22 @@ The `response_language` parameter accepts the following language codes:
 - `tr`: Turkish
 - `hi`: Hindi
 
+## Best Practices
+- **Query Precision**: Provide clear and concise queries to get accurate results.
+- **Custom Search**: Use the `custom_search` or `custom_search_stream` to write your own system and user prompts for more specific queries. always be specific with the user prompt since it will be used for the web search. Remember to include date context if needed in your system prompt. if you need citations, you must add the citation prompt in the System prompt.
+- **API Key Security**: Never hard-code your API key in your source code. Use environment variables or secure configuration management.
+- **Error Handling**: Always implement proper error handling to manage API errors and network issues gracefully.
+- **Asynchronous Usage**: For applications that need to handle multiple requests concurrently, consider using the asynchronous version of the client.
+- **Streaming Responses**: When using `search_stream` or `custom_search_stream`, remember to handle the streaming nature of the response appropriately in your application.
+- **Pro Mode**: Use `pro_mode=True` when you need advanced search features, but be aware that it might be slower.
+- **Date Context**: When historical context is important for your query, always specify the `date_context` parameter. Use the format "Today is Tuesday 19 of November 2024 and the time is 9:40 PM".
+- **Localization**: Use the `location` to get localized results.
+- **Response Language**: Use the `response_language` parameter to get responses in different languages.
+- **Recency Filter**: Use the `recency_filter` parameter to filter results by recency.
+- **Verbose Mode**: Use the `verbose_mode` parameter to get more detailed information in the response.
+- **Search Type**: Use the `search_type` parameter to specify the type of search (general or news).
+
+
 ## Error Handling
 
 The library raises `OpenperplexError` exceptions for API errors. Always wrap your API calls in try-except blocks:
@@ -321,24 +353,12 @@ except OpenperplexError as e:
 
 Remember to handle potential network errors and other exceptions as needed in your application.
 
-## Best Practices
-
-1. **API Key Security**: Never hard-code your API key in your source code. Use environment variables or secure configuration management.
-
-2. **Error Handling**: Always implement proper error handling to manage API errors and network issues gracefully.
-
-3. **Asynchronous Usage**: For applications that need to handle multiple requests concurrently, consider using the asynchronous version of the client.
-
-4. **Streaming Responses**: When using `search_stream` or `custom_search_stream`, remember to handle the streaming nature of the response appropriately in your application.
-
-5. **Pro Mode**: Use `pro_mode=True` when you need advanced search features, but be aware that it might be slower.
-
-6. **Date Context**: When historical context is important for your query, always specify the `date_context` parameter.
-
-7. **Localization**: Use the `location` and `response_language` parameters to get more relevant and localized results.
+## Discord Community
+- Join our Discord community to get help, share your projects, and discuss the latest updates: [Openperplex Discord](https://discord.com/invite/rdZQPEQGMc)
 
 ## Conclusion
 
 The Openperplex Python library provides a powerful interface to access advanced search and web analysis capabilities. By leveraging its various methods and parameters, you can create sophisticated applications that can understand and process web content in multiple languages and contexts.
 
 For any issues, feature requests, or further questions, please open an issue.
+

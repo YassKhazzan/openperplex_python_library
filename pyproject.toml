@@ -4,7 +4,7 @@
 
    [project]
    name = "openperplex"
-   version = "0.2.0"
+   version = "0.2.1"
    description = "A Python client for the Openperplex API"
    readme = "README.md"
    authors = [{name = "Yassine khazzan", email = "yassine.khazzan@gmail.com"}]

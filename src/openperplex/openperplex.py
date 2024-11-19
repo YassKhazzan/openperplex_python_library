@@ -45,6 +45,7 @@ class OpenperplexSync:
                       return_citations: bool = False,
                       return_sources: bool = False,
                       return_images: bool = False,
+                      recency_filter: str = "anytime",
                       ) -> Generator[Dict[str, Any], None, None]:
         endpoint = "/search_stream"
         params = {
@@ -58,7 +59,8 @@ class OpenperplexSync:
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
-            "return_images": return_images
+            "return_images": return_images,
+            "recency_filter": recency_filter
         }
 
         with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={"X-API-Key": self.api_key}) as response:
@@ -77,6 +79,7 @@ class OpenperplexSync:
                return_citations: bool = False,
                return_sources: bool = False,
                return_images: bool = False,
+               recency_filter: str = "anytime",
                ) -> Dict[str, Any]:
         endpoint = "/search"
         params = {
@@ -90,7 +93,8 @@ class OpenperplexSync:
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
-            "return_images": return_images
+            "return_images": return_images,
+            "recency_filter": recency_filter
         }
 
         response = self._make_request(endpoint, params)
@@ -131,6 +135,7 @@ class OpenperplexSync:
                              return_images: bool = False,
                              return_sources: bool = False,
                              temperature: float = 0.2,
+                             recency_filter: str = "anytime",
                              top_p: float = 0.9) -> Generator[Dict[str, Any], None, None]:
         endpoint = "/custom_search_stream"
         params = {
@@ -142,7 +147,8 @@ class OpenperplexSync:
             "return_images": return_images,
             "return_sources": return_sources,
             "temperature": temperature,
-            "top_p": top_p
+            "top_p": top_p,
+            "recency_filter": recency_filter
         }
 
         with self.client.stream("POST", urljoin(self.base_url, endpoint), json=params, headers={"X-API-Key": self.api_key}) as response:
@@ -157,6 +163,7 @@ class OpenperplexSync:
                       return_images: bool = False,
                       return_sources: bool = False,
                       temperature: float = 0.2,
+                      recency_filter: str = "anytime",
                       top_p: float = 0.9) -> Dict[str, Any]:
         endpoint = "/custom_search"
         params = {
@@ -168,7 +175,8 @@ class OpenperplexSync:
             "return_images": return_images,
             "return_sources": return_sources,
             "temperature": temperature,
-            "top_p": top_p
+            "top_p": top_p,
+            "recency_filter": recency_filter
         }
 
         response = self.client.post(urljoin(self.base_url, endpoint), json=params, headers={"X-API-Key": self.api_key})
@@ -253,6 +261,7 @@ class OpenperplexAsync:
                             return_citations: bool = False,
                             return_sources: bool = False,
                             return_images: bool = False,
+                            recency_filter: str = "anytime",
                             ) -> AsyncGenerator[Dict[str, Any], None]:
         endpoint = "/search_stream"
         params = {
@@ -266,7 +275,8 @@ class OpenperplexAsync:
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
-            "return_images": return_images
+            "return_images": return_images,
+            "recency_filter": recency_filter
         }
 
         async with self.client.stream("GET", urljoin(self.base_url, endpoint), params=params, headers={"X-API-Key": self.api_key}) as response:
@@ -286,6 +296,7 @@ class OpenperplexAsync:
                      return_citations: bool = False,
                      return_sources: bool = False,
                      return_images: bool = False,
+                     recency_filter: str = "anytime",
                      ) -> Dict[str, Any]:
         endpoint = "/search"
         params = {
@@ -299,7 +310,8 @@ class OpenperplexAsync:
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
-            "return_images": return_images
+            "return_images": return_images,
+            "recency_filter": recency_filter
         }
 
         response = await self._make_request(endpoint, params)
@@ -340,6 +352,7 @@ class OpenperplexAsync:
                                    return_images: bool = False,
                                    return_sources: bool = False,
                                    temperature: float = 0.2,
+                                   recency_filter: str = "anytime",
                                    top_p: float = 0.9) -> AsyncGenerator[Dict[str, Any], None]:
         endpoint = "/custom_search_stream"
         params = {
@@ -351,7 +364,8 @@ class OpenperplexAsync:
             "return_images": return_images,
             "return_sources": return_sources,
             "temperature": temperature,
-            "top_p": top_p
+            "top_p": top_p,
+            "recency_filter": recency_filter
         }
 
         async with self.client.stream("POST", urljoin(self.base_url, endpoint), json=params,
@@ -368,6 +382,7 @@ class OpenperplexAsync:
                             return_images: bool = False,
                             return_sources: bool = False,
                             temperature: float = 0.2,
+                            recency_filter: str = "anytime",
                             top_p: float = 0.9) -> Dict[str, Any]:
         endpoint = "/custom_search"
         params = {
@@ -379,7 +394,8 @@ class OpenperplexAsync:
             "return_images": return_images,
             "return_sources": return_sources,
             "temperature": temperature,
-            "top_p": top_p
+            "top_p": top_p,
+            "recency_filter": recency_filter
         }
 
         response = await self.client.post(urljoin(self.base_url, endpoint), json=params,
