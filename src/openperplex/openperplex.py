@@ -37,10 +37,9 @@ class OpenperplexSync:
     def search_stream(self, query: str,
                       date_context: Optional[str] = None,
                       location: str = 'us',
-                      pro_mode: bool = False,
+                      model: str = 'gpt-4o-mini',
                       response_language: str = 'auto',
                       answer_type: str = 'text',
-                      verbose_mode: bool = False,
                       search_type: str = 'general',
                       return_citations: bool = False,
                       return_sources: bool = False,
@@ -52,10 +51,9 @@ class OpenperplexSync:
             "query": query,
             "date_context": date_context,
             "location": location,
-            "pro_mode": pro_mode,
             "response_language": response_language,
             "answer_type": answer_type,
-            "verbose_mode": verbose_mode,
+            "model": model,
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
@@ -71,10 +69,9 @@ class OpenperplexSync:
     def search(self, query: str,
                date_context: Optional[str] = None,
                location: str = 'us',
-               pro_mode: bool = False,
+               model: str = 'gpt-4o-mini',
                response_language: str = 'auto',
                answer_type: str = 'text',
-               verbose_mode: bool = False,
                search_type: str = 'general',
                return_citations: bool = False,
                return_sources: bool = False,
@@ -86,10 +83,9 @@ class OpenperplexSync:
             "query": query,
             "date_context": date_context,
             "location": location,
-            "pro_mode": pro_mode,
+            "model": model,
             "response_language": response_language,
             "answer_type": answer_type,
-            "verbose_mode": verbose_mode,
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
@@ -121,16 +117,16 @@ class OpenperplexSync:
         response = self._make_request(endpoint, params)
         return response.json()
 
-    def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
+    def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text',model:str='gpt-4o-mini') -> Dict[str, Any]:
         endpoint = "/query_from_url"
-        params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type}
+        params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type,"model":model}
 
         response = self._make_request(endpoint, params)
         return response.json()
 
     def custom_search_stream(self, system_prompt: str, user_prompt: str,
                              location: str = 'us',
-                             pro_mode: bool = False,
+                             model: str = 'gpt-4o-mini',
                              search_type: str = 'general',
                              return_images: bool = False,
                              return_sources: bool = False,
@@ -141,8 +137,8 @@ class OpenperplexSync:
         params = {
             "system_prompt": system_prompt,
             "user_prompt": user_prompt,
+            "model": model,
             "location": location,
-            "pro_mode": pro_mode,
             "search_type": search_type,
             "return_images": return_images,
             "return_sources": return_sources,
@@ -158,7 +154,7 @@ class OpenperplexSync:
 
     def custom_search(self, system_prompt: str, user_prompt: str,
                       location: str = 'us',
-                      pro_mode: bool = False,
+                      model: str = 'gpt-4o-mini',
                       search_type: str = 'general',
                       return_images: bool = False,
                       return_sources: bool = False,
@@ -169,8 +165,8 @@ class OpenperplexSync:
         params = {
             "system_prompt": system_prompt,
             "user_prompt": user_prompt,
+            "model": model,
             "location": location,
-            "pro_mode": pro_mode,
             "search_type": search_type,
             "return_images": return_images,
             "return_sources": return_sources,
@@ -253,10 +249,9 @@ class OpenperplexAsync:
     async def search_stream(self, query: str,
                             date_context: Optional[str] = None,
                             location: str = 'us',
-                            pro_mode: bool = False,
+                            model: str = 'gpt-4o-mini',
                             response_language: str = 'auto',
                             answer_type: str = 'text',
-                            verbose_mode: bool = False,
                             search_type: str = 'general',
                             return_citations: bool = False,
                             return_sources: bool = False,
@@ -268,10 +263,9 @@ class OpenperplexAsync:
             "query": query,
             "date_context": date_context,
             "location": location,
-            "pro_mode": pro_mode,
+            "model": model,
             "response_language": response_language,
             "answer_type": answer_type,
-            "verbose_mode": verbose_mode,
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
@@ -288,10 +282,9 @@ class OpenperplexAsync:
     async def search(self, query: str,
                      date_context: Optional[str] = None,
                      location: str = 'us',
-                     pro_mode: bool = False,
+                     model: str = 'gpt-4o-mini',
                      response_language: str = 'auto',
                      answer_type: str = 'text',
-                     verbose_mode: bool = False,
                      search_type: str = 'general',
                      return_citations: bool = False,
                      return_sources: bool = False,
@@ -301,12 +294,11 @@ class OpenperplexAsync:
         endpoint = "/search"
         params = {
             "query": query,
+            "model": model,
             "date_context": date_context,
             "location": location,
-            "pro_mode": pro_mode,
             "response_language": response_language,
             "answer_type": answer_type,
-            "verbose_mode": verbose_mode,
             "search_type": search_type,
             "return_citations": return_citations,
             "return_sources": return_sources,
@@ -338,16 +330,16 @@ class OpenperplexAsync:
         response = await self._make_request(endpoint, params)
         return response.json()
 
-    async def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text') -> Dict[str, Any]:
+    async def query_from_url(self, url: str, query: str, response_language: str = 'auto', answer_type: str = 'text',model:str='gpt-4o-mini') -> Dict[str, Any]:
         endpoint = "/query_from_url"
-        params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type}
+        params = {"url": url, "query": query, "response_language": response_language, "answer_type": answer_type,"model":model}
 
         response = await self._make_request(endpoint, params)
         return response.json()
 
     async def custom_search_stream(self, system_prompt: str, user_prompt: str,
                                    location: str = 'us',
-                                   pro_mode: bool = False,
+                                   model: str = 'gpt-4o-mini',
                                    search_type: str = 'general',
                                    return_images: bool = False,
                                    return_sources: bool = False,
@@ -358,8 +350,8 @@ class OpenperplexAsync:
         params = {
             "system_prompt": system_prompt,
             "user_prompt": user_prompt,
+            "model": model,
             "location": location,
-            "pro_mode": pro_mode,
             "search_type": search_type,
             "return_images": return_images,
             "return_sources": return_sources,
@@ -377,7 +369,7 @@ class OpenperplexAsync:
 
     async def custom_search(self, system_prompt: str, user_prompt: str,
                             location: str = 'us',
-                            pro_mode: bool = False,
+                            model: str = 'gpt-4o-mini',
                             search_type: str = 'general',
                             return_images: bool = False,
                             return_sources: bool = False,
@@ -388,8 +380,8 @@ class OpenperplexAsync:
         params = {
             "system_prompt": system_prompt,
             "user_prompt": user_prompt,
+            "model": model,
             "location": location,
-            "pro_mode": pro_mode,
             "search_type": search_type,
             "return_images": return_images,
             "return_sources": return_sources,

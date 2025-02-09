@@ -42,10 +42,9 @@ result = client_sync.search(
     query="What are the latest developments in AI?",
     date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
     location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-    pro_mode=False, # set to True to enable pro mode
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
     answer_type="text", # can be 'text', 'markdown', or 'html'
-    verbose_mode=False, # set to True to enable verbose mode
     search_type="general", # can be 'news' or 'general'
     return_citations=False, # set to True to return citations
     return_sources=False, # set to True to return sources
@@ -60,10 +59,9 @@ for chunk in client_sync.search_stream(
     query="Explain quantum computing",
     date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
     location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-    pro_mode=False,  # set to True to enable pro mode
     response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
     answer_type="text", # can be 'text', 'markdown', or 'html'
-    verbose_mode=False, # set to True to enable verbose mode
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     search_type="general", # can be 'news' or 'general'
     return_citations=False, # set to True to return citations
     return_sources=False, # set to True to return sources
@@ -84,10 +82,9 @@ async def search_async():
         query="What are the latest developments in AI?",
         date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
         location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-        pro_mode=False, # set to True to enable pro mode
         response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
         answer_type="text", # can be 'text', 'markdown', or 'html'
-        verbose_mode=False, # set to True to enable verbose mode
+        model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
         search_type="general", # can be 'news' or 'general'
         return_citations=False, # set to True to return citations
         return_sources=False, # set to True to return sources
@@ -101,10 +98,9 @@ async for chunk in client_async.search_stream(
         query="Explain quantum computing",
         date_context="Today is Tuesday 19 of November 2024 and the time is 9:40 PM",
         location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-        pro_mode=False, # set to True to enable pro mode
         response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
         answer_type="text", # can be 'text', 'markdown', or 'html'
-        verbose_mode=False, # set to True to enable verbose mode
+        model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
         search_type="general", # can be 'news' or 'general'
         return_citations=False, # set to True to return citations
         return_sources=False, # set to True to return sources
@@ -181,7 +177,8 @@ response = client_sync.query_from_url(
     url="https://www.example.com/article",
     query="What is the main topic of this article?",
     response_language="en", # can be 'auto', 'en', 'fr', 'es', 'de', 'it', 'pt', 'nl', 'ja', 'ko', 'zh', 'ar', 'ru', 'tr', 'hi'
-    answer_type="text" # can be 'text', 'markdown', or 'html'
+    answer_type="text", # can be 'text', 'markdown', or 'html'
+     model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
 )
 print(response)
 ```
@@ -193,7 +190,8 @@ response = await client_async.query_from_url(
     url="https://www.example.com/article",
     query="What is the main topic of this article?",
     response_language="en", 
-    answer_type="text"
+    answer_type="text",
+    model="o3-mini-medium" # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
 )
 print(response)
 ```
@@ -210,7 +208,7 @@ result = client_sync.custom_search(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
     location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-    pro_mode=False, # set to True to enable pro mode
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     search_type="general", # can be 'news' or 'general'
     return_images=False, # set to True to return images
     return_sources=False, # set to True to return sources
@@ -224,8 +222,8 @@ print(result)
 for chunk in client_sync.custom_search_stream(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
-    location="us",
-    pro_mode=False,
+    location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     search_type="general",
     return_images=False,
     return_sources=False,
@@ -244,7 +242,7 @@ result = await client_async.custom_search(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
     location="us",
-    pro_mode=False,
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     search_type="general",
     return_images=False,
     return_sources=False,
@@ -259,7 +257,7 @@ async for chunk in client_async.custom_search_stream(
     system_prompt="You are a helpful assistant.",
     user_prompt="Explain the theory of relativity",
     location="us", # can be 'us', 'ca', 'uk',.... (see supported locations below)
-    pro_mode=False, # set to True to enable pro mode
+    model="o3-mini-medium", # can be 'o3-mini-medium', 'o3-mini-high', 'gpt-4o', 'gpt-4o-mini'
     search_type="general", # can be 'news' or 'general'
     return_images=False, # set to True to return images
     return_sources=False, # set to True to return sources
@@ -276,10 +274,9 @@ async for chunk in client_async.custom_search_stream(
 - `query`: The search query or question.
 - `date_context`: String Optional date for context (format: "today is 8 of october and time is 4 PM" or "YYYY-MM-DD HH:MM AM/PM"). If empty, the current date of the API server is used.
 - `location`: Country code for search context. Default is "us".
-- `pro_mode`: Boolean to enable or disable pro mode. Default is False.
+- `model`: Model to use for the search. Options are "o3-mini-medium", "o3-mini-high", "gpt-4o", or "gpt-4o-mini"(default).
 - `response_language`: Language code for the response. Default is "auto" (auto-detect).
 - `answer_type`: Type of answer format. Options are "text" (default), "markdown", or "html".
-- `verbose_mode`: Boolean to enable or disable verbose mode. Default is False.
 - `search_type`: Type of search to perform (general or news). Default is "general".
 - `return_citations`: Boolean to indicate whether to return citations. Default is False.
 - `return_sources`: Boolean to indicate whether to return sources. Default is False.
@@ -289,6 +286,7 @@ async for chunk in client_async.custom_search_stream(
 ### Custom Search Parameters
 - `system_prompt`: The system prompt for custom search.
 - `user_prompt`: The user prompt for custom search.
+- `model`: Model to use for the search. Options are "o3-mini-medium", "o3-mini-high", "gpt-4o", or "gpt-4o-mini"(default).
 - `temperature`: Float value to control the randomness of the output. Default is 0.2.
 - `top_p`: Float value to control the diversity of the output. Default is 0.9.
 - `search_type`: Type of search to perform (general or news). Default is "general".
@@ -328,12 +326,11 @@ The `response_language` parameter accepts the following language codes:
 - **Error Handling**: Always implement proper error handling to manage API errors and network issues gracefully.
 - **Asynchronous Usage**: For applications that need to handle multiple requests concurrently, consider using the asynchronous version of the client.
 - **Streaming Responses**: When using `search_stream` or `custom_search_stream`, remember to handle the streaming nature of the response appropriately in your application.
-- **Pro Mode**: Use `pro_mode=True` when you need advanced search features, but be aware that it might be slower.
+- **model**: Use the `model` parameter to specify the model to use for the search. The default model is "gpt-4o-mini". Other options are "o3-mini-high","o3-mini-medium", "gpt-4o", or "gpt-4o-mini".
 - **Date Context**: When historical context is important for your query, always specify the `date_context` parameter. Use the format "Today is Tuesday 19 of November 2024 and the time is 9:40 PM".
 - **Localization**: Use the `location` to get localized results.
 - **Response Language**: Use the `response_language` parameter to get responses in different languages.
 - **Recency Filter**: Use the `recency_filter` parameter to filter results by recency.
-- **Verbose Mode**: Use the `verbose_mode` parameter to get more detailed information in the response.
 - **Search Type**: Use the `search_type` parameter to specify the type of search (general or news).
 
 
