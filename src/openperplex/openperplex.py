@@ -4,6 +4,8 @@ from typing import Optional, Dict, Any, Generator, AsyncGenerator, List
 from urllib.parse import urljoin
 
 
+#https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net
+
 class OpenperplexError(Exception):
     def __init__(self, status_code: int, detail: str):
         self.status_code = status_code
@@ -11,7 +13,7 @@ class OpenperplexError(Exception):
         super().__init__(f"OPENPERPLEX ERROR : {status_code} - {detail}")
 
 class OpenperplexSync:
-    def __init__(self, api_key: str, base_url: str = "https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net"):
+    def __init__(self, api_key: str, base_url: str = "https://v3.openperplexapi.com"):
         self.base_url = base_url
         self.api_key = api_key
         self.client = httpx.Client(timeout=40.0)
@@ -223,7 +225,7 @@ class OpenperplexSync:
         self.client.close()
 
 class OpenperplexAsync:
-    def __init__(self, api_key: str, base_url: str = "https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net"):
+    def __init__(self, api_key: str, base_url: str = "https://v3.openperplexapi.com"):
         self.base_url = base_url
         self.api_key = api_key
         self.client = httpx.AsyncClient(timeout=40.0)
